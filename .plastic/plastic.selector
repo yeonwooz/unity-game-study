@@ -1,0 +1,4 @@
+repository "john-lemon-2@seanee123@cloud"
+  path "/"
+    br "/main"
+    co "/main"
