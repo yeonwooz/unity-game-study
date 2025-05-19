@@ -21,20 +21,33 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+		float horizontal = Input.GetAxis("Horizontal");
+		float vertical = Input.GetAxis("Vertical");
 
-        m_Movement.Set(horizontal, 0f, vertical);
-        m_Movement.Normalize();
+		Vector3 input = new Vector3(horizontal, 0f, vertical);
+		input = Vector3.ClampMagnitude(input, 1f);
 
-        bool hasHorizontalInput = !Mathf.Approximately(horizontal, 0f);
-        bool hasVerticalInput = !Mathf.Approximately(vertical, 0f);
-        bool isWalking = hasHorizontalInput || hasVerticalInput;
-        m_Animator.SetBool("IsWalking", isWalking);
+		// 카메라 기준으로 변환
+		Vector3 cameraForward = Camera.main.transform.forward;
+		Vector3 cameraRight = Camera.main.transform.right;
 
-        // TODO: ���͵� ����
-        Vector3 desiredForward = Vector3.RotateTowards(transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
-        m_Rotation = Quaternion.LookRotation(desiredForward);
+		// y축은 제거 (평면 이동만 고려)
+		cameraForward.y = 0f;
+		cameraRight.y = 0f;
+		cameraForward.Normalize();
+		cameraRight.Normalize();
+
+		// 입력을 카메라 방향 기준으로 변환
+		m_Movement = cameraForward * input.z + cameraRight * input.x;
+		m_Movement.Normalize();
+
+		bool hasHorizontalInput = !Mathf.Approximately(horizontal, 0f);
+		bool hasVerticalInput = !Mathf.Approximately(vertical, 0f);
+		bool isWalking = hasHorizontalInput || hasVerticalInput;
+		m_Animator.SetBool("IsWalking", isWalking);
+
+		Vector3 desiredForward = Vector3.RotateTowards(transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
+		m_Rotation = Quaternion.LookRotation(desiredForward);
     }
 
     void OnAnimatorMove()

@@ -3401,10 +3401,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1382663329}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58df1b1340508af41a25f8425db30ff1, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e4707acd763689438e04dc254d7e842, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 400
+  rotationSpeed: 3
 --- !u!1 &1502130741
 GameObject:
   m_ObjectHideFlags: 0
@@ -3468,7 +3468,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1502130741}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57f600a0c72de3a42aef2d1b2080b05c, type: 3}
+  m_Script: {fileID: 11500000, guid: 9661738464e3ca6478bdb16586aa2966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fadeDuration: 1
